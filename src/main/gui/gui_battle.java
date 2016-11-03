@@ -2,7 +2,14 @@ package main.gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import main.Heroes.Heroes;
+import main.Monsters.Monsters;
+import main.levels.level;
 import main.main;
+import main.Fighter;
+import main.Queue;
+import main.Util.util;
 
 /**
   *
@@ -12,7 +19,7 @@ import main.main;
   * @author 
   */
 
-public class gui_ranbattle extends JFrame {
+public class gui_battle extends JFrame {
   // start attributes
   private JTextArea jTextArea1 = new JTextArea("");
     private JScrollPane jTextArea1ScrollPane = new JScrollPane(jTextArea1);
@@ -28,13 +35,32 @@ public class gui_ranbattle extends JFrame {
   private JButton Button_Action_4 = new JButton();
   private JTextArea jTextArea3 = new JTextArea("");
     private JScrollPane jTextArea3ScrollPane = new JScrollPane(jTextArea3);
+  private util util=new util();
   private main main;
+  private Heroes mainHero;
+  private level level;
+  private Queue<Fighter> Fighterqu = new Queue<Fighter>();
   // end attributes
   
-  public gui_ranbattle(main pmain) {
+  public gui_battle(main pmain, level plevel, Heroes pmain_hero) {
     // Frame-Init
     super();
     main=pmain;
+    mainHero=pmain_hero;
+    level=plevel;
+    Monsters[] Monsters = level.getlevelMonster(level);
+    if (Monsters[0].getInit()>=mainHero.getInit()){
+      for (Monsters mon:Monsters){
+        Fighterqu.enqueue(mon);
+      }
+      Fighterqu.enqueue(mainHero);
+    }else {
+      Fighterqu.enqueue(mainHero);
+      for (Monsters mon:Monsters){
+        Fighterqu.enqueue(mon);
+      }
+    }
+
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 1028; 
     int frameHeight = 720;
@@ -66,13 +92,13 @@ public class gui_ranbattle extends JFrame {
     Label_Hero_Demage.setFont(new Font("Dialog", Font.BOLD, 32));
     cp.add(Label_Hero_Demage);
     Label_Enemy_Life.setBounds(250, 560, 100, 41);
-    Label_Enemy_Life.setText("");
+        Label_Enemy_Life.setText("");
     cp.add(Label_Enemy_Life);
     Label_Hero_Life.setBounds(570, 560, 100, 41);
     Label_Hero_Life.setText("");
     cp.add(Label_Hero_Life);
     Button_Action_1.setBounds(760, 150, 150, 40);
-    Button_Action_1.setText("Button_Action_1");
+    Button_Action_1.setText("Default Attack");
     Button_Action_1.setMargin(new Insets(2, 2, 2, 2));
     Button_Action_1.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -81,7 +107,7 @@ public class gui_ranbattle extends JFrame {
     });
     cp.add(Button_Action_1);
     Button_Action_2.setBounds(760, 225, 150, 40);
-    Button_Action_2.setText("Button_Action_2");
+    Button_Action_2.setText("Special Attack");
     Button_Action_2.setMargin(new Insets(2, 2, 2, 2));
     Button_Action_2.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -90,7 +116,7 @@ public class gui_ranbattle extends JFrame {
     });
     cp.add(Button_Action_2);
     Button_Action_3.setBounds(760, 300, 150, 40);
-    Button_Action_3.setText("Button_Action_3");
+    Button_Action_3.setText("Items");
     Button_Action_3.setMargin(new Insets(2, 2, 2, 2));
     Button_Action_3.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -99,7 +125,7 @@ public class gui_ranbattle extends JFrame {
     });
     cp.add(Button_Action_3);
     Button_Action_4.setBounds(760, 375, 150, 40);
-    Button_Action_4.setText("Button_Action_4");
+    Button_Action_4.setText("Run");
     Button_Action_4.setMargin(new Insets(2, 2, 2, 2));
     Button_Action_4.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -113,13 +139,56 @@ public class gui_ranbattle extends JFrame {
     // end components
     
     setVisible(true);
-  } // end of public gui_ranbattle
+    updateall();
+  } // end of public gui_battle
   
   // start methods
 
+  private void updateall(){
+    Label_Hero_Life.setText(null);
+    Label_Enemy_Life.setText(null);
+    jTextArea3.setText(null);
+    Fighter first=Fighterqu.front();
+    Fighter mov;
+    Fighterqu.dequeue();
+    Fighterqu.enqueue(first);
+    jTextArea3.append(first.getName()+" ||");
+    while (!first.equals(Fighterqu.front())){
+      mov=Fighterqu.front();
+      jTextArea3.append(mov.getName()+" ||");
+      Fighterqu.dequeue();
+      Fighterqu.enqueue(mov);
+    }
+
+    String enemyhealt;
+    if (Fighterqu.front()==mainHero){
+      enemyhealt=util.getsecond(Fighterqu).getHealth()+"/"+util.getsecond(Fighterqu).getMaxhealt();
+    }else enemyhealt=Fighterqu.front().getHealth()+"/"+Fighterqu.front().getMaxhealt();
+    Label_Enemy_Life.setText(enemyhealt);
+    Label_Hero_Life.setText(mainHero.getHealth()+"/"+mainHero.getMaxhealt());
+
+    jTextArea1.setText(null);
+    if (Fighterqu.front()==mainHero){
+      Fighter secfie = util.getsecond(Fighterqu);
+      jTextArea1.append("Name: "+secfie.getName()+"\nArmor: "+secfie.getArmore()+"\nInit: "+secfie.getInit()+"\nDefault Damage: "+secfie.getDdemage()+"\n\nMain Hand: "+secfie.getMainHand().getName()+"\n"+secfie.getMainHand().getDescription());
+    }else {
+      Fighter secfie = Fighterqu.front();
+      jTextArea1.append("Name: "+secfie.getName()+"\nArmor: "+secfie.getArmore()+"\nInit: "+secfie.getInit()+"\nDefault Damage: "+secfie.getDdemage()+"\n\nMain Hand: "+secfie.getMainHand().getName()+"\n"+secfie.getMainHand().getDescription());
+    }
+
+
+
+  }
+
+  private void doenemyturn(){
+
+  }
+
   
   public void Button_Action_1_ActionPerformed(ActionEvent evt) {
-    // TODO add your code here
+    Label_Hero_Demage.setText(mainHero.getDdemage()+"");
+    util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
+    updateall();
   } // end of Button_Action_1_ActionPerformed
 
   public void Button_Action_2_ActionPerformed(ActionEvent evt) {
@@ -135,4 +204,4 @@ public class gui_ranbattle extends JFrame {
   } // end of Button_Action_4_ActionPerformed
 
   // end methods
-} // end of class gui_ranbattle
+} // end of class gui_battle

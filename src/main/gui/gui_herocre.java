@@ -207,7 +207,7 @@ public class gui_herocre extends JFrame {
     else{
       switch (race_int) {
         case 0: {}
-        case 1: {mainHero = new Warrior(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(4,8));}
+        case 1: {mainHero = new Warrior(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(10,20));}
         case 2: {}
         case 3: {}
         case 4: {}

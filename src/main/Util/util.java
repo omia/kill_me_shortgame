@@ -1,8 +1,9 @@
 package main.Util;
 
 
-import main.Heroes.Heroes;
-import main.main;
+
+import main.Fighter;
+import main.Queue;
 
 import java.util.Random;
 
@@ -16,5 +17,18 @@ public class util {
         return randomNum;
     }
 
+    public Fighter getsecond(Queue<Fighter> fighterQueue){
+        Fighter first = fighterQueue.front();
+        fighterQueue.dequeue();
+        fighterQueue.enqueue(first);
+        Fighter second=fighterQueue.front();
+        Fighter moving;
 
+        while (!fighterQueue.front().equals(first)){
+            moving = fighterQueue.front();
+            fighterQueue.dequeue();
+            fighterQueue.enqueue(moving);
+        }
+        return second;
+    }
 }
