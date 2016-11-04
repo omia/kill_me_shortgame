@@ -3,8 +3,11 @@ package main;
 import main.items.Default_Item;
 import main.items.items;
 
+import java.lang.reflect.Method;
+
 public abstract class Fighter {
     protected  String name;
+    protected  String Type;
     protected double ddemage;
 
     protected double maxhealt;
@@ -23,12 +26,16 @@ public abstract class Fighter {
         maxhealt=pHealth;
     }
 
+
     public void adddemage(double pdemage){health=health-pdemage;}
     public void addhealth(double phealth){health=health+phealth;}
     public void rasemaxhealt(double pmaxhealt){maxhealt=maxhealt+pmaxhealt;}
     public void addinit(double pinit){init=init+pinit;}
     public void addarmore(double parmore){armore=armore+parmore;}
 
+    public String getType() {
+        return Type;
+    }
 
     public String getName() {
         return name;

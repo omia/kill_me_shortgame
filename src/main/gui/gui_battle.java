@@ -1,6 +1,7 @@
 package main.gui;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.Instant;
 import javax.swing.*;
 
 import main.Heroes.Heroes;
@@ -10,6 +11,7 @@ import main.main;
 import main.Fighter;
 import main.Queue;
 import main.Util.util;
+import sun.security.jca.GetInstance;
 
 /**
   *
@@ -34,12 +36,13 @@ public class gui_battle extends JFrame {
   private JButton Button_Action_3 = new JButton();
   private JButton Button_Action_4 = new JButton();
   private JTextArea jTextArea3 = new JTextArea("");
-    private JScrollPane jTextArea3ScrollPane = new JScrollPane(jTextArea3);
+  private JScrollPane jTextArea3ScrollPane = new JScrollPane(jTextArea3);
   private util util=new util();
   private main main;
   private Heroes mainHero;
   private level level;
   private Queue<Fighter> Fighterqu = new Queue<Fighter>();
+  private JFrame frame=this;
   // end attributes
   
   public gui_battle(main pmain, level plevel, Heroes pmain_hero) {
@@ -107,7 +110,7 @@ public class gui_battle extends JFrame {
     });
     cp.add(Button_Action_1);
     Button_Action_2.setBounds(760, 225, 150, 40);
-    Button_Action_2.setText("Special Attack");
+    Button_Action_2.setText("Special Move");
     Button_Action_2.setMargin(new Insets(2, 2, 2, 2));
     Button_Action_2.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -140,13 +143,16 @@ public class gui_battle extends JFrame {
     
     setVisible(true);
     updateall();
+      start();
   } // end of public gui_battle
   
   // start methods
 
+    private int specialattack=0;
+
   private void updateall(){
-    Label_Hero_Life.setText(null);
-    Label_Enemy_Life.setText(null);
+    Label_Demage_Enemy.setText(null);
+    Label_Hero_Demage.setText(null);
     jTextArea3.setText(null);
     Fighter first=Fighterqu.front();
     Fighter mov;
@@ -176,23 +182,60 @@ public class gui_battle extends JFrame {
       jTextArea1.append("Name: "+secfie.getName()+"\nArmor: "+secfie.getArmore()+"\nInit: "+secfie.getInit()+"\nDefault Damage: "+secfie.getDdemage()+"\n\nMain Hand: "+secfie.getMainHand().getName()+"\n"+secfie.getMainHand().getDescription());
     }
 
+    jTextArea2.setText(null);
+    jTextArea2.append("Name: "+mainHero.getName()+"\nArmor: "+mainHero.getArmore()+"\nInit: "+mainHero.getInit()+"\nDefault Damage: "+mainHero.getDdemage()+"\n\nMain Hand: "+mainHero.getMainHand().getName()+"\n"+mainHero.getMainHand().getDescription());
 
+  }
 
+  private void start(){
+      updateall();
+      if (Fighterqu.front()!=mainHero){
+          System.out.println("enemy turn");
+           Thread enemy = new enemyturn();
+          enemy.start();
+      }
   }
 
   private void doenemyturn(){
+      if (util.getsecond(Fighterqu).getHealth()<1){
+        Fighterqu.dequeue();
+          Fighterqu.enqueue(mainHero);
+          Fighterqu.dequeue();
+          if(Fighterqu.front()==mainHero){
+              new outputdialog(frame,"End",false,true);
+          }
+      }
+      else {Fighterqu.dequeue();Fighterqu.enqueue(mainHero);}
 
+        start();
   }
 
+  private void shownext(){
+      jTextArea3.setText(null);
+
+  }
   
   public void Button_Action_1_ActionPerformed(ActionEvent evt) {
-    Label_Hero_Demage.setText(mainHero.getDdemage()+"");
-    util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
-    updateall();
+      if (Fighterqu.front()==mainHero) {
+          specialattack=0;
+          Label_Hero_Demage.setText(mainHero.getDdemage() + "");
+          util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
+          doenemyturn();
+      }
+
   } // end of Button_Action_1_ActionPerformed
 
   public void Button_Action_2_ActionPerformed(ActionEvent evt) {
-    // TODO add your code here
+      if (Fighterqu.front()==mainHero && specialattack==0) {
+          switch (mainHero.getType()) {
+              case "Warrior": {
+                  Label_Hero_Demage.setText(mainHero.getDdemage() + "");
+                  util.getsecond(Fighterqu).adddemage(mainHero.getDdemage()); }
+
+          }
+          specialattack = 1;
+          doenemyturn();
+      }
   } // end of Button_Action_2_ActionPerformed
 
   public void Button_Action_3_ActionPerformed(ActionEvent evt) {
@@ -204,4 +247,81 @@ public class gui_battle extends JFrame {
   } // end of Button_Action_4_ActionPerformed
 
   // end methods
+
+    private class outputdialog extends JDialog{
+      // Anfang Attribute
+      private JLabel jLabel1 = new JLabel();
+      private JButton jButton1 = new JButton();
+      // Ende Attribute
+
+      public outputdialog(JFrame owner, String title, boolean modal,boolean won) {
+          // Dialog-Initialisierung
+          super(owner, title, modal);
+          setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+          int frameWidth = 356;
+          int frameHeight = 238;
+          setSize(frameWidth, frameHeight);
+          Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+          int x = (d.width - getSize().width) / 2;
+          int y = (d.height - getSize().height) / 2;
+          setLocation(x, y);
+          Container cp = getContentPane();
+          cp.setLayout(null);
+          // Anfang Komponenten
+
+          jLabel1.setBounds(48, 24, 254, 36);
+          if(won){jLabel1.setText("You Won");}
+          else {jLabel1.setText("You are Death");}
+          cp.add(jLabel1);
+          jButton1.setBounds(112, 120, 115, 41);
+          jButton1.setText("Back to main Menu");
+          jButton1.setMargin(new Insets(2, 2, 2, 2));
+          jButton1.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent evt) {
+                  jButton1_ActionPerformed(evt);
+              }
+          });
+          cp.add(jButton1);
+          // Ende Komponenten
+
+          setResizable(false);
+          setVisible(true);
+          getOwner().dispose();
+      } // end of public temp
+
+      // Anfang Methoden
+      public void jButton1_ActionPerformed(ActionEvent evt) {
+          main.showmainmen();
+          this.dispose();
+
+
+
+      } // end of jButton1_ActionPerformed
+
+      // Ende Methoden
+    }
+
+    private class enemyturn extends Thread{
+        @Override
+        public void run() {
+            try{
+                System.out.println("start enemy");
+                Thread.sleep(1000);
+                updateall();
+                Monsters current = (Monsters) Fighterqu.front();
+                Label_Demage_Enemy.setText(current.getDdemage()+"");
+                mainHero.adddemage(current.getDdemage());
+                System.out.println("enemy: "+current.getName());
+                Thread.sleep(1000);
+                Fighterqu.dequeue();
+                Fighterqu.enqueue(current);
+                if (mainHero.getHealth()<0){new outputdialog(frame,"End",false,false);}
+                System.out.println("Next");
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            gui_battle.this.start();
+
+        }
+    }
 } // end of class gui_battle
