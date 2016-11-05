@@ -18,8 +18,11 @@ public abstract class Fighter {
     protected double init;
     protected double armore;
     protected double health;
+    protected boolean onfire=false;
+    protected boolean frozen=false;
 
-    public Fighter(String pName,double pddemage, double pHealth){
+
+    public Fighter(String pName, double pddemage, double pHealth){
         name=pName;
         ddemage=pddemage;
         health=pHealth;
@@ -75,5 +78,21 @@ public abstract class Fighter {
 
     public void setOffHand(items offHand) {
         this.offHand = offHand;
+    }
+
+    public boolean isOnfire() {
+        return onfire;
+    }
+
+    public void setOnfire(boolean onfire) {
+        this.onfire = onfire;
+    }
+
+    public boolean isFrozen() {
+        return frozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
     }
 }

@@ -6,8 +6,6 @@ import main.main;
 import java.awt.*;
 import java.awt.event.*;
 import main.Util.util;
-
-
 /**
   *
   * Description
@@ -83,7 +81,7 @@ public class gui_herocre extends JFrame {
     Button_Race_3.setFont(new Font("Dialog", Font.BOLD, 32));
     cp.add(Button_Race_3);
     Button_Race_4.setBounds(750, 358, 200, 50);
-    Button_Race_4.setText("Race_4");
+    Button_Race_4.setText("Healer");
     Button_Race_4.setMargin(new Insets(2, 2, 2, 2));
     Button_Race_4.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -93,7 +91,7 @@ public class gui_herocre extends JFrame {
     Button_Race_4.setFont(new Font("Dialog", Font.BOLD, 32));
     cp.add(Button_Race_4);
     Button_Race_5.setBounds(750, 450, 200, 50);
-    Button_Race_5.setText("Race_5");
+    Button_Race_5.setText("Snowman");
     Button_Race_5.setMargin(new Insets(2, 2, 2, 2));
     Button_Race_5.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -103,7 +101,7 @@ public class gui_herocre extends JFrame {
     Button_Race_5.setFont(new Font("Dialog", Font.BOLD, 32));
     cp.add(Button_Race_5);
     Button_Race_6.setBounds(750, 550, 200, 50);
-    Button_Race_6.setText("Race_6");
+    Button_Race_6.setText("Archer");
     Button_Race_6.setMargin(new Insets(2, 2, 2, 2));
     Button_Race_6.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -151,12 +149,12 @@ public class gui_herocre extends JFrame {
   private int race_int =0;
 
   private String empty ="\n\n<-- Please select Gender\n\n\n\n\nPlease select Fighter_Type -->\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEnter Name\n |\n v";
-  private String Warrior ="The Warrior:\nHealth: 10-20\nDamage: 3-6";
-  private String Rogue ="The Rogue:\nHealth: 20-25\nDamage: 1-3";
+  private String Warrior ="The Warrior:\nHealth: 20-30\nDamage: 3-6";
+  private String Rogue ="The Rogue:\nHealth: 20-25\nDamage: 2-4";
   private String Mage ="The Mage:\nHealth: 15-23\nDamage: 2-5";
-  private String m4 ="";
-  private String m5 ="";
-  private String m6 ="";
+  private String Healer="The Healer:\nHealth: 25-30\nDamage: 1-3";
+  private String Snowman ="The Snowman:\nHealth: 20-25\nDamage: 1-2";
+  private String Archer ="The Archer:\nHealth: 14-20\nDamage: 1-2";
 
   private String getInfo(){
     switch (race_int){
@@ -164,24 +162,11 @@ public class gui_herocre extends JFrame {
       case 1:{return Warrior;}
       case 2:{return Rogue;}
       case 3:{return Mage;}
-      case 4:{return empty;}
-      case 5:{return empty;}
-      case 6:{return empty;}
+      case 4:{return Healer;}
+      case 5:{return Snowman;}
+      case 6:{return Archer;}
     }
      return empty;
-  }
-
-  private String getRace(int i){
-    switch (i) {
-      case 0: {return null;}
-      case 1: {return "Warrior";}
-      case 2: {return "Rogue";}
-      case 3: {return "Mage";}
-      case 4: {return null;}
-      case 5: {return null;}
-      case 6: {return null;}
-    }
-    return null;
   }
 
   private void aktanzeige(){
@@ -229,12 +214,12 @@ public class gui_herocre extends JFrame {
     else{
       switch (race_int) {
         case 0: {}
-        case 1: {mainHero = new Warrior(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(3,6),util.randInt(10,20));}
+        case 1: {mainHero = new Warrior(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(3,6),util.randInt(20,30));}
         case 2: {mainHero = new rogue(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(20,25));}
         case 3: {mainHero = new Mage(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(2,5),util.randInt(15,23));}
-        case 4: {}
-        case 5: {}
-        case 6: {}
+        case 4: {mainHero = new Healer(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(2,5),util.randInt(25,30));}
+        case 5: {mainHero = new Snowman(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(20,25));}
+        case 6: {mainHero = new Archer(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(3,6),util.randInt(15,20));}
         }
         if (mainHero!=null)
         {main.herocreattomainmen(main,mainHero); this.dispose();}

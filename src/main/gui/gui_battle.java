@@ -238,10 +238,14 @@ public class gui_battle extends JFrame {
                   }
               }
               case "Warrior":{
-
+                  Label_Hero_Demage.setText(mainHero.getDdemage()*1.5 + "");
+                  util.getsecond(Fighterqu).adddemage(mainHero.getDdemage()*1.5);
               }
               case "Mage":{
-
+                util.getsecond(Fighterqu).setOnfire(true);
+              }
+              case "Healer":{
+                 mainHero.addhealth(mainHero.getDdemage());
               }
 
           }
@@ -328,9 +332,13 @@ public class gui_battle extends JFrame {
                 Thread.sleep(1000);
                 updateall();
                 Monsters current = (Monsters) Fighterqu.front();
+                if (current.isFrozen()){
+                    Label_Demage_Enemy.setText("Enemy is Frozen");
+                }else {
                 Label_Demage_Enemy.setText(current.getDdemage()+"");
-                mainHero.adddemage(current.getDdemage());
+                mainHero.adddemage(current.getDdemage());}
                 System.out.println("enemy: "+current.getName());
+                if (current.isOnfire()){current.adddemage(1);}
                 Thread.sleep(1000);
                 Fighterqu.dequeue();
                 Fighterqu.enqueue(current);
