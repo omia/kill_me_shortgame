@@ -92,10 +92,9 @@ public class gui_mainmen extends JFrame {
 
   public void Information_update(){
     Heroes main_Hero = main.getMainHero();
-    String Hero_Type=""+main_Hero.getClass();
     Label_Hero.setText(main_Hero.getName());
     Area_Your_Hero_Information.setText(null);
-    Area_Your_Hero_Information.append("Name: "+main_Hero.getName()+"\nType: "+Hero_Type.lastIndexOf('.')+"\nLevel: "+main_Hero.getLevel()+"\nXp: "+main_Hero.getXp()+" of "+main_Hero.getLevel()*10);
+    Area_Your_Hero_Information.append("Name: "+main_Hero.getName()+"\nType: "+main_Hero.getType()+"\nLevel: "+main_Hero.getLevel()+"\nXp: "+main_Hero.getXp()+" of "+main_Hero.getLevel()*10);
   }
   
   public void Button_Story_ActionPerformed(ActionEvent evt) {

@@ -53,7 +53,7 @@ public class gui_herocre extends JFrame {
     // start components
     
     Button_Race_1.setBounds(750, 50, 200, 49);
-    Button_Race_1.setText("Race_1");
+    Button_Race_1.setText("Warrior");
     Button_Race_1.setMargin(new Insets(2, 2, 2, 2));
     Button_Race_1.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -63,7 +63,7 @@ public class gui_herocre extends JFrame {
     Button_Race_1.setFont(new Font("Dialog", Font.BOLD, 32));
     cp.add(Button_Race_1);
     Button_Race_2.setBounds(750, 150, 200, 50);
-    Button_Race_2.setText("Race_2");
+    Button_Race_2.setText("Rogue");
     Button_Race_2.setMargin(new Insets(2, 2, 2, 2));
     Button_Race_2.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -73,7 +73,7 @@ public class gui_herocre extends JFrame {
     Button_Race_2.setFont(new Font("Dialog", Font.BOLD, 32));
     cp.add(Button_Race_2);
     Button_Race_3.setBounds(750, 250, 200, 50);
-    Button_Race_3.setText("Race_3");
+    Button_Race_3.setText("Mage");
     Button_Race_3.setMargin(new Insets(2, 2, 2, 2));
     Button_Race_3.addActionListener(new ActionListener() { 
       public void actionPerformed(ActionEvent evt) { 
@@ -141,6 +141,7 @@ public class gui_herocre extends JFrame {
     Input_GenderModel.addElement("Female");
     Input_Gender.setMaximumRowCount(3);
     cp.add(Input_Gender);
+    aktanzeige();
     // end components
     
     setVisible(true);
@@ -149,13 +150,33 @@ public class gui_herocre extends JFrame {
   // start methods
   private int race_int =0;
 
+  private String empty ="\n\n<-- Please select Gender\n\n\n\n\nPlease select Fighter_Type -->\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEnter Name\n |\n v";
+  private String Warrior ="The Warrior:\nHealth: 10-20\nDamage: 3-6";
+  private String Rogue ="The Rogue:\nHealth: 20-25\nDamage: 1-3";
+  private String Mage ="The Mage:\nHealth: 15-23\nDamage: 2-5";
+  private String m4 ="";
+  private String m5 ="";
+  private String m6 ="";
+
+  private String getInfo(){
+    switch (race_int){
+      case 0:{return empty;}
+      case 1:{return Warrior;}
+      case 2:{return Rogue;}
+      case 3:{return Mage;}
+      case 4:{return empty;}
+      case 5:{return empty;}
+      case 6:{return empty;}
+    }
+     return empty;
+  }
 
   private String getRace(int i){
     switch (i) {
       case 0: {return null;}
       case 1: {return "Warrior";}
-      case 2: {return null;}
-      case 3: {return null;}
+      case 2: {return "Rogue";}
+      case 3: {return "Mage";}
       case 4: {return null;}
       case 5: {return null;}
       case 6: {return null;}
@@ -165,6 +186,7 @@ public class gui_herocre extends JFrame {
 
   private void aktanzeige(){
   jTextArea1.setText(null);
+ jTextArea1.append(getInfo());
   }
 
   
@@ -200,16 +222,16 @@ public class gui_herocre extends JFrame {
 
   public void Button_Create_ActionPerformed(ActionEvent evt) throws InterruptedException {
     Heroes mainHero=null;
-    if (race_int==0 || Input_Name.getText()==null|| Input_Gender.getSelectedIndex()==0){
+    if (race_int==0 || Input_Name.getText()==""|| Input_Gender.getSelectedIndex()==0){
       jTextArea1.setText(null);
       jTextArea1.setText("Check if all inputs are set!\n Name/Gender/Type");
     }
     else{
       switch (race_int) {
         case 0: {}
-        case 1: {mainHero = new Warrior(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(10,20));}
-        case 2: {}
-        case 3: {}
+        case 1: {mainHero = new Warrior(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(3,6),util.randInt(10,20));}
+        case 2: {mainHero = new rogue(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(20,25));}
+        case 3: {mainHero = new Mage(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(2,5),util.randInt(15,23));}
         case 4: {}
         case 5: {}
         case 6: {}

@@ -31,4 +31,24 @@ public class util {
         }
         return second;
     }
+
+    public Fighter getthird(Queue<Fighter> fighterQueue){
+        Fighter first = fighterQueue.front();
+        fighterQueue.dequeue();
+        fighterQueue.enqueue(first);
+        Fighter second=fighterQueue.front();
+        fighterQueue.dequeue();
+        fighterQueue.enqueue(second);
+        Fighter third=fighterQueue.front();
+        fighterQueue.dequeue();
+        fighterQueue.enqueue(second);
+        Fighter moving;
+
+        while (!fighterQueue.front().equals(first)){
+            moving = fighterQueue.front();
+            fighterQueue.dequeue();
+            fighterQueue.enqueue(moving);
+        }
+        return third;
+    }
 }

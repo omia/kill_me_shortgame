@@ -6,7 +6,6 @@ import main.gui.*;
 import main.levels.levelgen;
 
 public class main {
-private Queue<Fighter> Fieghter = new Queue<Fighter>();
 private Heroes mainHero;
 private main mainclass;
 private gui_herocre gui_herocreate;

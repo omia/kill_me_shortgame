@@ -50,6 +50,7 @@ public class gui_battle extends JFrame {
     super();
     main=pmain;
     mainHero=pmain_hero;
+    mainHero.heal();
     level=plevel;
     Monsters[] Monsters = level.getlevelMonster(level);
     if (Monsters[0].getInit()>=mainHero.getInit()){
@@ -149,6 +150,7 @@ public class gui_battle extends JFrame {
   // start methods
 
     private int specialattack=0;
+    private int run=0;
 
   private void updateall(){
     Label_Demage_Enemy.setText(null);
@@ -206,7 +208,7 @@ public class gui_battle extends JFrame {
           }
       }
       else {Fighterqu.dequeue();Fighterqu.enqueue(mainHero);}
-
+        run=0;
         start();
   }
 
@@ -228,9 +230,19 @@ public class gui_battle extends JFrame {
   public void Button_Action_2_ActionPerformed(ActionEvent evt) {
       if (Fighterqu.front()==mainHero && specialattack==0) {
           switch (mainHero.getType()) {
-              case "Warrior": {
+              case "Rogue": {
                   Label_Hero_Demage.setText(mainHero.getDdemage() + "");
-                  util.getsecond(Fighterqu).adddemage(mainHero.getDdemage()); }
+                  util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
+                  if (util.getthird(Fighterqu)!=mainHero ){
+                      util.getthird(Fighterqu).adddemage(mainHero.getDdemage());
+                  }
+              }
+              case "Warrior":{
+
+              }
+              case "Mage":{
+
+              }
 
           }
           specialattack = 1;
@@ -239,11 +251,17 @@ public class gui_battle extends JFrame {
   } // end of Button_Action_2_ActionPerformed
 
   public void Button_Action_3_ActionPerformed(ActionEvent evt) {
-    // TODO add your code here
+
+      //Custom button text
+
   } // end of Button_Action_3_ActionPerformed
 
   public void Button_Action_4_ActionPerformed(ActionEvent evt) {
-    // TODO add your code here
+      if (run==0){
+    jTextArea3.setText(null);
+    jTextArea3.setText("If you are sure press run again! If not just attack");  }
+      else {main.showmainmen();
+          this.dispose();}
   } // end of Button_Action_4_ActionPerformed
 
   // end methods
@@ -257,7 +275,7 @@ public class gui_battle extends JFrame {
       public outputdialog(JFrame owner, String title, boolean modal,boolean won) {
           // Dialog-Initialisierung
           super(owner, title, modal);
-          setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+          setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
           int frameWidth = 356;
           int frameHeight = 238;
           setSize(frameWidth, frameHeight);
@@ -300,6 +318,7 @@ public class gui_battle extends JFrame {
 
       // Ende Methoden
     }
+
 
     private class enemyturn extends Thread{
         @Override

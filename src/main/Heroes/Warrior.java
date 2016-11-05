@@ -1,6 +1,5 @@
 package main.Heroes;
 
-import java.lang.reflect.Method;
 
 public class Warrior extends Heroes {
 

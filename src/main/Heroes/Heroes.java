@@ -1,5 +1,6 @@
 package main.Heroes;
 import main.Fighter;
+import main.items.items;
 
 
 public abstract class Heroes extends Fighter{
@@ -8,6 +9,7 @@ public abstract class Heroes extends Fighter{
     private boolean female;
     private double xp;
     private int level_complieted=0;
+    private items item;
 
 
     public Heroes(boolean pfemale,String pName,double pddemage,double phealth){
@@ -34,4 +36,5 @@ public abstract class Heroes extends Fighter{
 
     public void add_xp(double pxp){xp=xp+pxp; if (xp==level*10){level++;xp=xp-level*10;}}
     public void addLevel_complieted(){level_complieted++;}
+    public void heal(){health=maxhealt;}
 }
