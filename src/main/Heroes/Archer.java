@@ -10,4 +10,9 @@ public class Archer extends Heroes {
         init=12;
         armore=4;
     }
+
+    @Override
+    public String getSpecialdisc() {
+        return "You hit two Enemy's this Round";
+    }
 }

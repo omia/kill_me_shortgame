@@ -11,4 +11,9 @@ public class Healer extends Heroes {
         init=6;
         armore=2;
     }
+
+    @Override
+    public String getSpecialdisc() {
+        return "You heal yourself!";
+    }
 }

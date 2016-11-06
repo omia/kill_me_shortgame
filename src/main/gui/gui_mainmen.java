@@ -30,12 +30,14 @@ public class gui_mainmen extends JFrame {
   private JTextArea jTextArea1 = new JTextArea("");
     private JScrollPane jTextArea1ScrollPane = new JScrollPane(jTextArea1);
   private main main;
+  private int oldlvl;
   // end attributes
   
   public gui_mainmen(main pmain) {
     // Frame-Init
     super();
     main = pmain;
+    oldlvl=main.getMainHero().getLevel();
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 1280; 
     int frameHeight = 720;
@@ -94,7 +96,33 @@ public class gui_mainmen extends JFrame {
     Heroes main_Hero = main.getMainHero();
     Label_Hero.setText(main_Hero.getName());
     Area_Your_Hero_Information.setText(null);
-    Area_Your_Hero_Information.append("Name: "+main_Hero.getName()+"\nType: "+main_Hero.getType()+"\nLevel: "+main_Hero.getLevel()+"\nXp: "+main_Hero.getXp()+" of "+main_Hero.getLevel()*10);
+    Area_Your_Hero_Information.append("Name: "+main_Hero.getName());
+    Area_Your_Hero_Information.append("\nType: "+main_Hero.getType());
+    Area_Your_Hero_Information.append("\n\nLevel: "+main_Hero.getLevel());
+    Area_Your_Hero_Information.append("\nXp: "+main_Hero.getXp()+" of "+main_Hero.getLevel()*10);
+    Area_Your_Hero_Information.append("\n\nHealth: "+main_Hero.getMaxhealt());
+    Area_Your_Hero_Information.append("\nInitiative: "+main_Hero.getInit());
+    Area_Your_Hero_Information.append("\nDamage(without Items): "+main_Hero.getDamage());
+    Area_Your_Hero_Information.append("\nDamage(with Items): "+main_Hero.getDdemage());
+    Area_Your_Hero_Information.append("\nArmor: "+main_Hero.getArmore());
+    Area_Your_Hero_Information.append("\n\nMain Hand: "+main_Hero.getMainHand().getName());
+    Area_Your_Hero_Information.append("\n"+main_Hero.getMainHand().getDescription());
+    Area_Your_Hero_Information.append("\nOffhand: "+main_Hero.getOffHand().getName());
+    Area_Your_Hero_Information.append("\n"+main_Hero.getOffHand().getDescription());
+    Area_Your_Hero_Information.append("\n\nSpecial Move:");
+    Area_Your_Hero_Information.append("\n"+main_Hero.getSpecialdisc());
+
+    if (oldlvl<main_Hero.getLevel()){
+      this.setVisible(false);
+      oldlvl=main_Hero.getLevel();
+      new gui_levelup(main);
+    }
+
+    jTextArea2.setText(null);
+    jTextArea2.append("\n\n"+main_Hero.getLevel_complieted()+" of 100 Levels Completed");
+
+    jTextArea1.setText(null);
+    jTextArea1.append("\n\nFight a random Battle against Clowns!");
   }
   
   public void Button_Story_ActionPerformed(ActionEvent evt) {

@@ -10,4 +10,9 @@ public class Snowman extends Heroes {
         init=1;
         armore=1;
     }
+
+    @Override
+    public String getSpecialdisc() {
+        return "You freeze the Enemy.";
+    }
 }

@@ -9,4 +9,9 @@ public class rogue extends Heroes{
         init=8;
         armore=2;
     }
+
+    @Override
+    public String getSpecialdisc() {
+        return "Attack: Studs the Enemy for one Turn.";
+    }
 }

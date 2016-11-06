@@ -12,5 +12,8 @@ public class Warrior extends Heroes {
     }
 
 
-
+    @Override
+    public String getSpecialdisc() {
+        return "You make 50% more Damage this Turn.";
+    }
 }

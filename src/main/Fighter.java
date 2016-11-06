@@ -20,6 +20,7 @@ public abstract class Fighter {
     protected double health;
     protected boolean onfire=false;
     protected boolean frozen=false;
+    protected int forzenvor=0;
 
 
     public Fighter(String pName, double pddemage, double pHealth){
@@ -33,8 +34,9 @@ public abstract class Fighter {
     public void adddemage(double pdemage){health=health-pdemage;}
     public void addhealth(double phealth){health=health+phealth;}
     public void rasemaxhealt(double pmaxhealt){maxhealt=maxhealt+pmaxhealt;}
-    public void addinit(double pinit){init=init+pinit;}
-    public void addarmore(double parmore){armore=armore+parmore;}
+    public void raseinit(double pinit){init=init+pinit;}
+    public void rasearmore(double parmore){armore=armore+parmore;}
+    public void raseddemage(double rddemage){ddemage=ddemage+rddemage;}
 
     public String getType() {
         return Type;
@@ -55,6 +57,8 @@ public abstract class Fighter {
     public double getDdemage() {
         return ddemage+mainHand.getDemagebonus()+offHand.getDemagebonus();
     }
+
+    public double getDamage(){return ddemage;}
 
     public double getInit() {
         return init+mainHand.getInitbonus()+offHand.getInitbonus();
@@ -94,5 +98,13 @@ public abstract class Fighter {
 
     public void setFrozen(boolean frozen) {
         this.frozen = frozen;
+    }
+
+    public int getForzenvor() {
+        return forzenvor;
+    }
+
+    public void setForzenvor(int forzenvor) {
+        this.forzenvor = forzenvor;
     }
 }

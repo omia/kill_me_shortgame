@@ -26,8 +26,9 @@ private levelgen levelgen = new levelgen();
 public Heroes getMainHero(){return mainHero;}
 public void start(main pmain){mainclass=pmain; gui_herocreate = new gui_herocre(pmain);}
 public void herocreattomainmen(main pmain, Heroes phero){mainHero=phero; gui_mainmen = new gui_mainmen(pmain); gui_mainmen.Information_update();}
-public void mainbutstory(main pmain){}
-public void mainbutranbattle(main pmain){gui_battle ranbattle = new gui_battle(pmain,levelgen.getlevel(2),mainHero);}
-public void showmainmen(){gui_mainmen.setVisible(true);}
+public void mainbutstory(main pmain){new gui_levelselect(mainclass,mainHero);}
+public void mainbutranbattle(main pmain){gui_battle ranbattle = new gui_battle(pmain,levelgen.getlevel(81),mainHero,false);}
+public void showmainmen(){gui_mainmen.setVisible(true); gui_mainmen.Information_update();}
+public void hidemainmen(){gui_mainmen.setVisible(false);}
 
 }

@@ -41,7 +41,7 @@ public class util {
         fighterQueue.enqueue(second);
         Fighter third=fighterQueue.front();
         fighterQueue.dequeue();
-        fighterQueue.enqueue(second);
+        fighterQueue.enqueue(third);
         Fighter moving;
 
         while (!fighterQueue.front().equals(first)){

@@ -10,4 +10,9 @@ public class Mage extends Heroes {
         init=7;
         armore=3;
     }
+
+    @Override
+    public String getSpecialdisc() {
+        return "You set the Enemy on fire.";
+    }
 }

@@ -149,12 +149,12 @@ public class gui_herocre extends JFrame {
   private int race_int =0;
 
   private String empty ="\n\n<-- Please select Gender\n\n\n\n\nPlease select Fighter_Type -->\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEnter Name\n |\n v";
-  private String Warrior ="The Warrior:\nHealth: 20-30\nDamage: 3-6";
-  private String Rogue ="The Rogue:\nHealth: 20-25\nDamage: 2-4";
-  private String Mage ="The Mage:\nHealth: 15-23\nDamage: 2-5";
-  private String Healer="The Healer:\nHealth: 25-30\nDamage: 1-3";
-  private String Snowman ="The Snowman:\nHealth: 20-25\nDamage: 1-2";
-  private String Archer ="The Archer:\nHealth: 14-20\nDamage: 1-2";
+  private String Warrior ="The Warrior:\nHealth: 20-30\nDamage: 3-6\n\nSpecial Attack: You make 50% more Damage this Turn.";
+  private String Rogue ="The Rogue:\nHealth: 20-25\nDamage: 2-4\n\nSpecial Attack: Studs the Enemy for one Turn.";
+  private String Mage ="The Mage:\nHealth: 15-23\nDamage: 2-5\n\nSpecial Attack: You set the Enemy on fire.\n                             which makes 1 Damage per Turn";
+  private String Healer="The Healer:\nHealth: 25-30\nDamage: 1-3\n\nSpecial Attack: You heal yourself.";
+  private String Snowman ="The Snowman:\nHealth: 20-25\nDamage: 1-2\n\nSpecial Attack: You freeze the Enemy.";
+  private String Archer ="The Archer:\nHealth: 14-20\nDamage: 1-2\n\nSpecial Attack: You hit two Enemy's this Round. ";
 
   private String getInfo(){
     switch (race_int){
@@ -213,13 +213,13 @@ public class gui_herocre extends JFrame {
     }
     else{
       switch (race_int) {
-        case 0: {}
-        case 1: {mainHero = new Warrior(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(3,6),util.randInt(20,30));}
-        case 2: {mainHero = new rogue(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(20,25));}
-        case 3: {mainHero = new Mage(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(2,5),util.randInt(15,23));}
-        case 4: {mainHero = new Healer(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(2,5),util.randInt(25,30));}
-        case 5: {mainHero = new Snowman(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(20,25));}
-        case 6: {mainHero = new Archer(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(3,6),util.randInt(15,20));}
+        case 0:
+        case 1: mainHero = new Warrior(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(3,6),util.randInt(20,30)); break;
+        case 2: mainHero = new rogue(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(20,25)); break;
+        case 3: mainHero = new Mage(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(2,5),util.randInt(15,23)); break;
+        case 4: mainHero = new Healer(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(2,5),util.randInt(25,30)); break;
+        case 5: mainHero = new Snowman(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(1,3),util.randInt(20,25)); break;
+        case 6: mainHero = new Archer(Input_Name.getText(),Input_Gender.getSelectedIndex()==2,util.randInt(3,6),util.randInt(15,20)); break;
         }
         if (mainHero!=null)
         {main.herocreattomainmen(main,mainHero); this.dispose();}
