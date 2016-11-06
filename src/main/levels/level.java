@@ -3,6 +3,8 @@ package main.levels;
 
 import main.Monsters.Monsters;
 import main.Monsters.Vampire;
+import main.Monsters.Werewolf;
+import main.Monsters.Zombie;
 import main.Util.Names;
 import main.Util.util;
 
@@ -40,16 +42,43 @@ public  class level {
 
     public Monsters[] getlevelMonster(level plevel){
         Monsters[] Monster =new Monsters[plevel.getLevel_monster_count()];
-        if (boss){
-        for (int i=0; i<plevel.getLevel_monster_count();i++){
-            Monster[i]= new Vampire(Names.generateName(),gesdema/level_monster_count,util.randInt(10,20));
-        }}
-        else {
-            for (int i=0; i<plevel.getLevel_monster_count();i++){
-                Monster[i]= new Vampire(Names.generateName(),gesdema/level_monster_count,util.randInt(4,10));
+        switch (type){
+            case 1: {
+                if (boss) {
+                    for (int i = 0; i < plevel.getLevel_monster_count(); i++) {
+                        Monster[i] = new Vampire(Names.generateName(), gesdema / level_monster_count, util.randInt(10, 20));
+                    }
+                } else {
+                    for (int i = 0; i < plevel.getLevel_monster_count(); i++) {
+                        Monster[i] = new Vampire(Names.generateName(), gesdema / level_monster_count, util.randInt(4, 10));
+                    }
+                }
+            }
+            case 2:{
+                if (boss) {
+                    for (int i = 0; i < plevel.getLevel_monster_count(); i++) {
+                        Monster[i] = new Zombie(Names.generateName(), gesdema / level_monster_count, util.randInt(20, 30));
+                    }
+                } else {
+                    for (int i = 0; i < plevel.getLevel_monster_count(); i++) {
+                        Monster[i] = new Zombie(Names.generateName(), gesdema / level_monster_count, util.randInt(14, 20));
+                    }
+                }
+            }
+            case 3:{
+                if (boss) {
+                    for (int i = 0; i < plevel.getLevel_monster_count(); i++) {
+                        Monster[i] = new Werewolf(Names.generateName(), gesdema / level_monster_count, util.randInt(30, 40));
+                    }
+                } else {
+                    for (int i = 0; i < plevel.getLevel_monster_count(); i++) {
+                        Monster[i] = new Werewolf(Names.generateName(), gesdema / level_monster_count, util.randInt(24, 30));
+                    }
+                }
             }
         }
     return Monster;
+
     }
 
 

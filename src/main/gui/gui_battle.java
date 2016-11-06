@@ -220,6 +220,7 @@ public class gui_battle extends JFrame {
   public void Button_Action_1_ActionPerformed(ActionEvent evt) {
       if (Fighterqu.front()==mainHero) {
           specialattack=0;
+          if (mainHero.getType()=="Rogue"){util.getsecond(Fighterqu).setFrozen(false);}
           Label_Hero_Demage.setText(mainHero.getDdemage() + "");
           util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
           doenemyturn();
@@ -231,11 +232,7 @@ public class gui_battle extends JFrame {
       if (Fighterqu.front()==mainHero && specialattack==0) {
           switch (mainHero.getType()) {
               case "Rogue": {
-                  Label_Hero_Demage.setText(mainHero.getDdemage() + "");
-                  util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
-                  if (util.getthird(Fighterqu)!=mainHero ){
-                      util.getthird(Fighterqu).adddemage(mainHero.getDdemage());
-                  }
+                  util.getsecond(Fighterqu).setFrozen(true);
               }
               case "Warrior":{
                   Label_Hero_Demage.setText(mainHero.getDdemage()*1.5 + "");
@@ -247,7 +244,16 @@ public class gui_battle extends JFrame {
               case "Healer":{
                  mainHero.addhealth(mainHero.getDdemage());
               }
-
+              case "Archer":{
+                  Label_Hero_Demage.setText(mainHero.getDdemage() + "");
+                  util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
+                  if (util.getthird(Fighterqu)!=mainHero ){
+                      util.getthird(Fighterqu).adddemage(mainHero.getDdemage());
+                  }
+              }
+              case "Snowman":{
+                  util.getsecond(Fighterqu).setFrozen(true);
+              }
           }
           specialattack = 1;
           doenemyturn();
