@@ -207,7 +207,7 @@ public class gui_herocre extends JFrame {
 
   public void Button_Create_ActionPerformed(ActionEvent evt) throws InterruptedException {
     Heroes mainHero=null;
-    if (race_int==0 || Input_Name.getText()==""|| Input_Gender.getSelectedIndex()==0){
+    if (race_int==0 || Input_Name.getText().equals("")|| Input_Gender.getSelectedIndex()==0){
       jTextArea1.setText(null);
       jTextArea1.setText("Check if all inputs are set!\n Name/Gender/Type");
     }
