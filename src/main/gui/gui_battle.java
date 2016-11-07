@@ -3,8 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Arc2D;
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.Comparator;
 import javax.swing.*;
 
+import com.sun.xml.internal.ws.policy.spi.PolicyAssertionValidator;
 import main.Heroes.Heroes;
 import main.Monsters.Monsters;
 import main.levels.level;
@@ -57,17 +60,25 @@ public class gui_battle extends JFrame {
     level=plevel;
     islevel=pislevel;
     Monsters[] Monsters = level.getlevelMonster(level);
-    if (Monsters[0].getInit()>=mainHero.getInit()){
-      for (Monsters mon:Monsters){
-        Fighterqu.enqueue(mon);
-      }
-      Fighterqu.enqueue(mainHero);
-    }else {
-      Fighterqu.enqueue(mainHero);
-      for (Monsters mon:Monsters){
-        Fighterqu.enqueue(mon);
-      }
+    Fighter[] Fighter = new Fighter[level.getLevel_monster_count()+1];
+      int p=0;
+      Fighter[p]=mainHero;
+      p++;
+      for (Monsters elem:Monsters){
+        Fighter[p]=elem;
+          p++;
     }
+      for (Monsters elem:Monsters){
+          if (elem == null){
+              System.out.print("error in the array");
+          }
+      }
+      Arrays.sort(Fighter);
+
+      for (Fighter elem:Fighter){
+         Fighterqu.enqueue(elem);
+      }
+
 
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     int frameWidth = 1028; 
@@ -181,11 +192,11 @@ public class gui_battle extends JFrame {
     Label_Hero_Life.setText(mainHero.getHealth()+"/"+mainHero.getMaxhealt());
 
     jTextArea1.setText(null);
-   if (util.getsecond(Fighterqu)!=null) {
-       if (Fighterqu.front() == mainHero) {
+
+        if (Fighterqu.front() == mainHero && util.getsecond(Fighterqu)!=mainHero) {
            Monsters secfie = (Monsters) util.getsecond(Fighterqu);
            jTextArea1.append("Name: " + secfie.getName() + "\n" + secfie.getRace() + "\nArmor: " + secfie.getArmore() + "\nInit: " + secfie.getInit() + "\nDefault Damage: " + secfie.getDdemage() + "\n\nMain Hand: " + secfie.getMainHand().getName() + "\n" + secfie.getMainHand().getDescription() + "\n" + secfie.getMainHand().getDescription() + "\nOffhand: " + secfie.getOffHand().getName() + "\n" + secfie.getOffHand().getDescription());
-       } else {
+       } else if(Fighterqu.front()!=mainHero){
            Monsters secfie = (Monsters) Fighterqu.front();
            jTextArea1.append("Name: " + secfie.getName() + "\n" + secfie.getRace() + "\nArmor: " + secfie.getArmore() + "\nInit: " + secfie.getInit() + "\nDefault Damage: " + secfie.getDdemage() + "\n\nMain Hand: " + secfie.getMainHand().getName() + "\n" + secfie.getMainHand().getDescription() + "\n" + secfie.getMainHand().getDescription() + "\nOffhand: " + secfie.getOffHand().getName() + "\n" + secfie.getOffHand().getDescription());
        }
@@ -198,7 +209,7 @@ public class gui_battle extends JFrame {
            spec = "Loading!";
        }
        jTextArea2.append("Name: " + mainHero.getName() + "\nArmor: " + mainHero.getArmore() + "\nInit: " + mainHero.getInit() + "\nDefault Damage: " + mainHero.getDdemage() + "\n\nMain Hand: " + mainHero.getMainHand().getName() + "\n" + mainHero.getMainHand().getDescription() + "\nOffhand: " + mainHero.getOffHand().getName() + "\n" + mainHero.getOffHand().getDescription() + "\n\nSpecial Attack:\n" + mainHero.getSpecialdisc() + "\n" + spec);
-   }
+
   }
 
   private void start(){
@@ -356,7 +367,7 @@ public class gui_battle extends JFrame {
               }
               else { xp = level.getLevel_monster_count()* 2.35387;}
               mainHero.add_xp(xp);
-              if (islevel){mainHero.addLevel_complieted();}
+              if (islevel&& level.getLevel_id()>mainHero.getLevel_complieted()){mainHero.addLevel_complieted();}
           }
           main.showmainmen();
           this.dispose();
@@ -367,8 +378,6 @@ public class gui_battle extends JFrame {
 
       // Ende Methoden
     }
-
-
     private class enemyturn extends Thread{
         @Override
         public void run() {
@@ -400,4 +409,5 @@ public class gui_battle extends JFrame {
 
         }
     }
+
 } // end of class gui_battle

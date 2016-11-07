@@ -2,20 +2,20 @@ package main;
 
 import main.items.Default_Item;
 import main.items.items;
+import main.Util.util;
 
-import java.lang.reflect.Method;
-
-public abstract class Fighter {
+public abstract class Fighter implements Comparable<Fighter>{
     protected  String name;
     protected  String Type;
     protected double ddemage;
+    protected util util;
 
     protected double maxhealt;
 
     protected items mainHand= new Default_Item("Empty","",0,0,0,0);
     protected items offHand= new Default_Item("Empty","",0,0,0,0);
 
-    protected double init;
+    protected double init ;
     protected double armore;
     protected double health;
     protected boolean onfire=false;
@@ -106,5 +106,17 @@ public abstract class Fighter {
 
     public void setForzenvor(int forzenvor) {
         this.forzenvor = forzenvor;
+    }
+
+    public int compareTo(Fighter compareFighter) {
+
+        int compareQuantity = (int) ((Fighter) compareFighter).getInit();
+
+        //ascending order
+        //return (int) (this.getInit() - compareQuantity);
+
+        //descending order
+        return (int) (compareQuantity - this.getInit());
+
     }
 }

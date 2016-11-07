@@ -7,7 +7,7 @@ public class Werewolf extends Monsters {
     public Werewolf(String pName, double pddemage, double phealth) {
         super(pName, pddemage, phealth);
         Race="Werewolf";
-        init=10;
+        init=main.Util.util.randInt(8,12);
         armore=4;
     }
 }

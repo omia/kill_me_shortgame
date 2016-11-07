@@ -7,7 +7,7 @@ public class Clowns extends Monsters {
     public Clowns(String pName, double pddemage, double phealth) {
         super(pName, pddemage, phealth);
         Race="Clown";
-        init=5;
+        init=main.Util.util.randInt(2,6);
         armore=1;
     }
 }

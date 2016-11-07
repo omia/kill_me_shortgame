@@ -7,7 +7,7 @@ public class Zombie extends Monsters {
     public Zombie(String pName, double pddemage, double phealth) {
         super(pName, pddemage, phealth);
         Race="Zombie";
-        init=2;
+        init=main.Util.util.randInt(1,5);
         armore=4;
     }
 }

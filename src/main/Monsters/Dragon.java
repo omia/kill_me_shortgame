@@ -7,7 +7,7 @@ public class Dragon extends Monsters {
     public Dragon(String pName, double pddemage, double phealth) {
         super(pName, pddemage, phealth);
         Race="Dragon";
-        init=20;
+        init=main.Util.util.randInt(15,25);
         armore=20;
     }
 }
