@@ -51,4 +51,19 @@ public class util {
         }
         return third;
     }
+
+    public int gethowmany(Queue<Fighter> fighterQueue){
+        int n=1;
+        Fighter front = fighterQueue.front();
+        fighterQueue.dequeue();
+        fighterQueue.enqueue(front);
+        Fighter movment = fighterQueue.front();
+        while (fighterQueue.front()!=front){
+            n++;
+            fighterQueue.dequeue();
+            fighterQueue.enqueue(movment);
+            movment=fighterQueue.front();
+        }
+        return n;
+    }
 }

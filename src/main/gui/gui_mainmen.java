@@ -114,12 +114,12 @@ public class gui_mainmen extends JFrame {
 
     if (oldlvl<main_Hero.getLevel()){
       this.setVisible(false);
-      oldlvl=main_Hero.getLevel();
+      oldlvl++;
       new gui_levelup(main);
     }
 
     jTextArea2.setText(null);
-    jTextArea2.append("\n\n"+main_Hero.getLevel_complieted()+" of 100 Levels Completed");
+    jTextArea2.append("\n\n"+main_Hero.getLevel_complieted()+" of 100 Levels Completed\nYou died "+main_Hero.getDeathes()+"times.");
 
     jTextArea1.setText(null);
     jTextArea1.append("\n\nFight a random Battle against Clowns!");

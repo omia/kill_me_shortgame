@@ -10,6 +10,7 @@ public abstract class Heroes extends Fighter{
     private double xp;
     private int level_complieted=0;
     private items item;
+    private int Deathes;
 
 
     public Heroes(boolean pfemale,String pName,double pddemage,double phealth){
@@ -36,8 +37,13 @@ public abstract class Heroes extends Fighter{
     public int getLevel_complieted(){return level_complieted;}
 
 
-    public void add_xp(double pxp){xp=xp+pxp; if (xp>=level*10){level++;xp=xp-(level-1)*10;}}
+    public void add_xp(double pxp){xp=xp+pxp; while (xp>=level*10){level++;xp=xp-(level-1)*10;}}
     public void addLevel_complieted(){level_complieted++;}
+    public void addDeath(){Deathes++;}
     public void heal(){health=maxhealt;}
     public abstract String getSpecialdisc();
+
+    public int getDeathes() {
+        return Deathes;
+    }
 }

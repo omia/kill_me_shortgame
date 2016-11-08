@@ -59,7 +59,7 @@ public class gui_levelselect extends JFrame {
         elem.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
-            new gui_battle(main,levelgen.getlevel(l),mainHero,true);
+            new gui_battle(main,levelgen.getlevel(l,false),mainHero,true);
             m.dispose();
           }
         });

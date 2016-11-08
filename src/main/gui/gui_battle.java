@@ -49,6 +49,7 @@ public class gui_battle extends JFrame {
    private boolean islevel;
   private Queue<Fighter> Fighterqu = new Queue<Fighter>();
   private JFrame frame=this;
+    private double levellife;
   // end attributes
   
   public gui_battle(main pmain, level plevel, Heroes pmain_hero, boolean pislevel) {
@@ -59,6 +60,7 @@ public class gui_battle extends JFrame {
     mainHero.heal();
     level=plevel;
     islevel=pislevel;
+    levellife=level.getgeslif();
     Monsters[] Monsters = level.getlevelMonster(level);
     Fighter[] Fighter = new Fighter[level.getLevel_monster_count()+1];
       int p=0;
@@ -195,10 +197,10 @@ public class gui_battle extends JFrame {
 
         if (Fighterqu.front() == mainHero && util.getsecond(Fighterqu)!=mainHero) {
            Monsters secfie = (Monsters) util.getsecond(Fighterqu);
-           jTextArea1.append("Name: " + secfie.getName() + "\n" + secfie.getRace() + "\nArmor: " + secfie.getArmore() + "\nInit: " + secfie.getInit() + "\nDefault Damage: " + secfie.getDdemage() + "\n\nMain Hand: " + secfie.getMainHand().getName() + "\n" + secfie.getMainHand().getDescription() + "\n" + secfie.getMainHand().getDescription() + "\nOffhand: " + secfie.getOffHand().getName() + "\n" + secfie.getOffHand().getDescription());
+           jTextArea1.append("Name: " + secfie.getName() + "\n" + secfie.getRace() + "\nArmor: " + secfie.getArmore() + "\nInit: " + secfie.getInit() + "\nDefault Damage: " + secfie.getDdemage() + "\n\nMain Hand: " + secfie.getMainHand().getName() + "\n" + secfie.getMainHand().getDescription() +  "\nOffhand: " + secfie.getOffHand().getName() + "\n" + secfie.getOffHand().getDescription());
        } else if(Fighterqu.front()!=mainHero){
            Monsters secfie = (Monsters) Fighterqu.front();
-           jTextArea1.append("Name: " + secfie.getName() + "\n" + secfie.getRace() + "\nArmor: " + secfie.getArmore() + "\nInit: " + secfie.getInit() + "\nDefault Damage: " + secfie.getDdemage() + "\n\nMain Hand: " + secfie.getMainHand().getName() + "\n" + secfie.getMainHand().getDescription() + "\n" + secfie.getMainHand().getDescription() + "\nOffhand: " + secfie.getOffHand().getName() + "\n" + secfie.getOffHand().getDescription());
+           jTextArea1.append("Name: " + secfie.getName() + "\n" + secfie.getRace() + "\nArmor: " + secfie.getArmore() + "\nInit: " + secfie.getInit() + "\nDefault Damage: " + secfie.getDdemage() + "\n\nMain Hand: " + secfie.getMainHand().getName() + "\n" + secfie.getMainHand().getDescription() +  "\nOffhand: " + secfie.getOffHand().getName() + "\n" + secfie.getOffHand().getDescription());
        }
 
        jTextArea2.setText(null);
@@ -214,7 +216,7 @@ public class gui_battle extends JFrame {
 
   private void start(){
       updateall();
-      if (Fighterqu.front()!=mainHero){
+      if (Fighterqu.front()!=mainHero&&mainHero.getHealth()>0){
           System.out.println("enemy turn");
            Thread enemy = new enemyturn();
           enemy.start();
@@ -247,6 +249,7 @@ public class gui_battle extends JFrame {
           if (mainHero.getType()=="Rogue"){util.getsecond(Fighterqu).setFrozen(false);}
           Label_Hero_Demage.setText(mainHero.getDdemage() + "");
           util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
+          levellife= (levellife-mainHero.getDdemage());
           doenemyturn();
       }
 
@@ -258,6 +261,7 @@ public class gui_battle extends JFrame {
               case "Warrior":
                   Label_Hero_Demage.setText(mainHero.getDdemage()*1.5 + "");
                   util.getsecond(Fighterqu).adddemage(mainHero.getDdemage()*1.5);
+                  levellife= (levellife-mainHero.getDdemage()*1.5);
                   System.out.println("W");
                   break;
 
@@ -274,8 +278,10 @@ public class gui_battle extends JFrame {
               case "Archer":
                   Label_Hero_Demage.setText(mainHero.getDdemage() + "");
                   util.getsecond(Fighterqu).adddemage(mainHero.getDdemage());
+                  levellife= (levellife-mainHero.getDdemage());
                   if (util.getthird(Fighterqu)!=mainHero ){
                       util.getthird(Fighterqu).adddemage(mainHero.getDdemage());
+                      levellife= (levellife-mainHero.getDdemage());
                   }
                   System.out.println("A");
                   break;
@@ -363,12 +369,14 @@ public class gui_battle extends JFrame {
           Double xp=0.0;
           if (won) {
               if (level.isBoss()) {
-                   xp = level.getLevel_monster_count()*10.693;
+                   xp = (level.getgeslif()/level.getLevel_id()*5.01258);
               }
-              else { xp = level.getLevel_monster_count()* 2.35387;}
-              mainHero.add_xp(xp);
+              else {
+                  xp = (level.getgeslif() / level.getLevel_id() * 2.01258);
+              }
               if (islevel&& level.getLevel_id()>mainHero.getLevel_complieted()){mainHero.addLevel_complieted();}
-          }
+          }else {mainHero.addDeath(); xp = ((level.getgeslif()-levellife)/level.getLevel_id()*5.01258);}
+          mainHero.add_xp(xp);
           main.showmainmen();
           this.dispose();
 
@@ -400,7 +408,7 @@ public class gui_battle extends JFrame {
                 Thread.sleep(1000);
                 Fighterqu.dequeue();
                 Fighterqu.enqueue(current);
-                if (mainHero.getHealth()<0){new outputdialog(frame,"End",false,false); System.out.println("lost");}
+                if (mainHero.getHealth()<=0){new outputdialog(frame,"End",false,false); System.out.println("lost");}
                 System.out.println("Next");
             }catch (InterruptedException e) {
                 e.printStackTrace();
